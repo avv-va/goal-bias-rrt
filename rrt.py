@@ -78,12 +78,13 @@ class GoalBiasRRT:
                 if math.dist(new_node.point, self.goal_node.point) <= self.epsilon:
                     new_edge = Edge(new_node, self.goal_node)
                     edges.append(new_edge)
-
-                    self.tree = Tree(nodes, edges)
-                    a_star(self.tree, self.start_node, self.goal_node)
-                    return
-
+                    break
             iteration += 1
+        
+        self.tree = Tree(nodes, edges)
+        self.path, self.iterations, self.computation_time, self.found_solution = a_star(self.tree, self.start_node, self.goal_node)
+        return self.path, self.iterations, self.computation_time, self.tree, self.start_node, self.goal_node, self.found_solution
 
     def draw_tree(self):
-        draw(self.tree, self.start_node, self.goal_node, self.x_range, self.y_range, self.obstacles)
+        draw(self.tree, self.start_node, self.goal_node, self.x_range, self.y_range, self.obstacles, self.path)
+
