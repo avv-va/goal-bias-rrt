@@ -1,4 +1,17 @@
 import matplotlib.pyplot as plt
+import math
+
+def compute_path_lenght(path):
+    i = 0
+    length = 0
+    while i < len(path):
+        point = path[i].point
+        if i == len(path) - 1:
+            break
+        next_point = path[i+1].point
+        length += math.dist(point, next_point)
+        i += 1
+    return length
 
 def draw(graph, start, goal, x_range, y_range, obstacles, path):
     plt.xlim(x_range[0], x_range[1])
@@ -13,7 +26,7 @@ def draw(graph, start, goal, x_range, y_range, obstacles, path):
         x, y = obstacle.exterior.xy
         plt.plot(x, y, color='red')
 
-    plt.title(f"Path length: {len(path) - 1}")
+    plt.title(f"Path length: {compute_path_lenght(path)}")
 
     # draw path
     i = 0
